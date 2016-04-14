@@ -39,6 +39,7 @@ dependencies {
     compile('io.reactivex:rxjava:1.1.0+')
     compile('net.logstash.logback:logstash-logback-encoder:4.6')
     compile('org.springframework.cloud:spring-cloud-starter-sleuth:1.0.0.BUILD-SNAPSHOT')
+    compile('org.springframework.cloud:spring-cloud-sleuth-core:1.0.0.BUILD-SNAPSHOT')
 }
 
 dependencyManagement {
