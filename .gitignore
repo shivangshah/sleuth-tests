@@ -1,5 +1,11 @@
 .gradle
 build/
+profile-mock-server/build
+profile-mock-server/.idea
+profile-mock-server/.nb-gradle
+auth-mock/build
+auth-mock/.idea
+auth-mock/.nb-gradle
 
 # Ignore Gradle GUI config
 gradle-app.setting

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+    <appender name="SERVER_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp/>
+                <callerData/>
+                <message/>
+                <stackTrace/>
+                <threadName/>
+                <logLevel/>
+                <mdc/>
+            </providers>
+        </encoder>
+    </appender>
+
+    <appender name="SERVER_CONSOLE_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="SERVER_CONSOLE"/>
+        <includeCallerData>true</includeCallerData>
+    </appender>
+
+    <logger name="com.shivang" level="DEBUG" additivity="false">
+        <appender-ref ref="SERVER_CONSOLE_ASYNC"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="SERVER_CONSOLE_ASYNC"/>
+    </root>
+
+</configuration>
