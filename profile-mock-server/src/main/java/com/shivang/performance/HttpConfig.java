@@ -10,6 +10,7 @@ import org.springframework.cloud.sleuth.SpanExtractor;
 import org.springframework.cloud.sleuth.SpanInjector;
 import org.springframework.cloud.sleuth.sampler.AlwaysSampler;
 import org.springframework.context.annotation.Primary;
+import org.springframework.http.HttpRequest;
 
 @Configuration
 public class HttpConfig {
@@ -21,7 +22,7 @@ public class HttpConfig {
 
     @Bean
     @Primary
-    public SpanInjector<HttpServletResponse> customHttpServletResponseSpanInjector() {
+    public SpanInjector<HttpRequest> customHttpServletResponseSpanInjector() {
         return new CustomHttpServletResponseSpanInjector();
     }
 

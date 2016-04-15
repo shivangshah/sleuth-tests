@@ -1,11 +1,12 @@
 package com.shivang.performance;
 
 import java.util.Random;
-import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.sleuth.Span;
 import org.springframework.cloud.sleuth.Span.SpanBuilder;
 import org.springframework.cloud.sleuth.SpanExtractor;
+import org.springframework.cloud.sleuth.TraceKeys;
 import org.springframework.util.StringUtils;
 import org.springframework.web.util.UrlPathHelper;
 
@@ -14,6 +15,8 @@ class CustomHttpServletRequestSpanExtractor implements SpanExtractor<HttpServlet
     private static final String HTTP_COMPONENT = "http";
     private final Random random;
 
+    @Autowired
+    private TraceKeys traceKeys;
     private UrlPathHelper urlPathHelper = new UrlPathHelper();
 
     public CustomHttpServletRequestSpanExtractor(Random random) {
@@ -42,13 +45,8 @@ class CustomHttpServletRequestSpanExtractor implements SpanExtractor<HttpServlet
         SpanBuilder span = Span.builder().traceId(traceId).spanId(spanId);
         String processId = carrier.getHeader(Span.PROCESS_ID_NAME);
         String parentName = carrier.getHeader(Span.SPAN_NAME_NAME);
-        String trueClientIp = carrier.getHeader(TraceHeaders.X_FORWARDED_FOR);
-        String trueClientSession = carrier.getHeader(TraceHeaders.X_GID_CLIENT_SESSION);
-        if (trueClientIp != null) {
-            span.tag(TraceHeaders.X_FORWARDED_FOR, trueClientIp);
-        }
-        if (trueClientSession != null) {
-            span.tag(TraceHeaders.X_GID_CLIENT_SESSION, trueClientSession);
+        for (String header : traceKeys.getHttp().getHeaders()) {
+            span.tag(header, carrier.getHeader(header));
         }
 
         if (StringUtils.hasText(parentName)) {
