@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="false">
     <appender name="SERVER_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+<!--        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
             <providers>
+                <mdc/>
                 <timestamp/>
                 <callerData/>
                 <message/>
                 <stackTrace/>
                 <threadName/>
                 <logLevel/>
-                <mdc/>
             </providers>
+        </encoder>-->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>[%-5level]-[%X{X-B3-TraceId},%X{X-B3-SpanId},%X{X-Forwarded-For},%X{X-Gid-Client-Session}]-[%date{dd MMM yyyy;HH:mm:ss.SSS,UTC}]-[%logger{0}:%method:%line] - %msg %ex{full}%n
+            </pattern>
         </encoder>
     </appender>
 
